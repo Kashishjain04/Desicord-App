@@ -6,6 +6,7 @@ import FormButton from '../Components/FormButton';
 import FormInput from '../Components/FormInput';
 import {setChannelInfo} from '../redux/features/AppSlice';
 import {selectUser} from '../redux/features/UserSlice';
+import messaging from '@react-native-firebase/messaging';
 
 const JoinScreen = ({navigation}) => {
   const [channelId, setId] = useState('');
@@ -15,6 +16,21 @@ const JoinScreen = ({navigation}) => {
     if (channelId.length === 0) {
       return alert('Invalid Channel Name');
     }
+    messaging()
+      .hasPermission()
+      .then((result) => {
+        if (result > 0) {
+          messaging()
+            .getToken()
+            .then((res) => {
+              firestore()
+                .collection('channels')
+                .doc(channelId)
+                .update({fcmTokens: firestore.FieldValue.arrayUnion(res)});
+            })
+            .catch(() => alert('Some error occurred'));
+        }
+      });
     firestore()
       .collection('channels')
       .doc(channelId)
@@ -68,7 +84,5 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 20,
-    position: 'absolute',
-    top: 60,
   },
 });

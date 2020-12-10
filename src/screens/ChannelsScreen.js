@@ -1,12 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {Text} from 'react-native';
 import Channel from '../Components/Channel';
 import {ChannelsContainer, JoinChannel} from '../styles/Channels';
 import {useSelector} from 'react-redux';
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {logout, selectUser} from '../redux/features/UserSlice';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {selectUser} from '../redux/features/UserSlice';
+import {FlatList} from 'react-native-gesture-handler';
 const ChannelsScreen = ({navigation}) => {
   // const dispatch = useDispatch();
   const [channels, setChannels] = useState([]);
