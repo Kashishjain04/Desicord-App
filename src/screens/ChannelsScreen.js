@@ -1,26 +1,66 @@
-import React, {useEffect, useState} from 'react';
-import {Text} from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useRef, useState} from 'react';
+import {ActivityIndicator, Text} from 'react-native';
 import Channel from '../Components/Channel';
 import {ChannelsContainer, JoinChannel} from '../styles/Channels';
 import {useSelector} from 'react-redux';
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {logout, selectUser} from '../redux/features/UserSlice';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {selectUser} from '../redux/features/UserSlice';
+import {FlatList} from 'react-native-gesture-handler';
+import messaging from '@react-native-firebase/messaging';
+
 const ChannelsScreen = ({navigation}) => {
-  // const dispatch = useDispatch();
+  const _isMounted = useRef(true);
+
+  const [isLoading, setLoading] = useState(true);
   const [channels, setChannels] = useState([]);
   const user = useSelector(selectUser);
+
   useEffect(() => {
     firestore()
       .collection('users')
       .doc(user.uid)
-      .onSnapshot((snap) => setChannels(snap.data().channels));
+      .onSnapshot((snap) => {
+        // set current user's channels
+        _isMounted.current && setChannels(snap.data().channels);
+        setLoading(false);
+        // update device messaging token in channel db
+        messaging()
+          .hasPermission()
+          .then((res) => {
+            if (res > 0) {
+              messaging()
+                .getToken()
+                .then((token) => {
+                  snap.data().channels.forEach((channel) => {
+                    firestore()
+                      .collection('channels')
+                      .doc(channel.channelId)
+                      .update({
+                        fcmTokens: firestore.FieldValue.arrayUnion(token),
+                      });
+                  });
+                });
+            }
+          });
+      });
+
+    // Cleanup oncomponentWillUnmount
+    return () => {
+      _isMounted.current = false;
+    };
   }, []);
-  return (
+
+  return isLoading ? (
+    <ActivityIndicator
+      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+      size={Platform.OS === 'android' ? 50 : 'large'}
+      color="#999"
+    />
+  ) : (
     <ChannelsContainer>
       <JoinChannel onPress={() => navigation.navigate('Join')}>
-        <Text>Join Channel</Text>
+        <Text style={{fontSize: 17}}>Join Channel</Text>
       </JoinChannel>
       <FlatList
         data={channels}
@@ -33,78 +73,6 @@ const ChannelsScreen = ({navigation}) => {
           />
         )}
       />
-      {/* <SidebarChannel
-          key={1}
-          channelId={"channelId"}
-          channelName={"channelName"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={2}
-          channelId={"channelId"}
-          channelName={"channelName1"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={3}
-          channelId={"channelId"}
-          channelName={"channelName2"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={4}
-          channelId={"channelId"}
-          channelName={"channelName2"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={5}
-          channelId={"channelId"}
-          channelName={"channelName2"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={6}
-          channelId={"channelId"}
-          channelName={"channelName2"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={7}
-          channelId={"channelId"}
-          channelName={"channelName2"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={8}
-          channelId={"channelId"}
-          channelName={"channelName2"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={9}
-          channelId={"channelId"}
-          channelName={"channelName2"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={10}
-          channelId={"channelId"}
-          channelName={"channelName2"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={11}
-          channelId={"channelId"}
-          channelName={"channelName2"}
-          navigate={() => navigation.navigate("Chat")}
-        />
-        <SidebarChannel
-          key={12}
-          channelId={"channelId"}
-          channelName={"channelName2"}
-          navigate={() => navigation.navigate("Chat")}
-        /> */}
     </ChannelsContainer>
   );
 };

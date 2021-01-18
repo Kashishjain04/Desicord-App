@@ -11,7 +11,7 @@ import ChatScreen from '../screens/ChatScreen';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ProfileScreen from '../screens/ProfileScreen';
-import {Text, View, Clipboard, DevSettings} from 'react-native';
+import {Text, View, DevSettings, Clipboard, Platform} from 'react-native';
 import AddChannel from '../screens/AddChannel';
 import JoinScreen from '../screens/JoinScreen';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -22,8 +22,8 @@ const Stack = createStackNavigator();
 
 const HomeStack = ({navigation}) => {
   const dispatch = useDispatch();
-  const logoutHandler = async () => {
-    await dispatch(logout());
+  const logoutHandler = () => {
+    dispatch(logout());
     auth().signOut();
     DevSettings.reload();
   };
@@ -32,7 +32,7 @@ const HomeStack = ({navigation}) => {
       initialRouteName="Home"
       screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        headerStatusBarHeight: 40,
+        headerStatusBarHeight: Platform.OS === 'android' ? 10 : 40,
         headerStyle: {
           elevation: 5,
         },
@@ -101,7 +101,15 @@ const AppStack = () => {
   const chName = useSelector(selectChannelName);
   const chId = useSelector(selectChannelId);
   return (
-    <Stack.Navigator initialRouteName="Channels">
+    <Stack.Navigator
+      initialRouteName="Channels"
+      screenOptions={{
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        headerStatusBarHeight: Platform.OS === 'android' ? 10 : 40,
+        headerStyle: {
+          elevation: 5,
+        },
+      }}>
       <Stack.Screen
         name="Channels"
         component={HomeStack}

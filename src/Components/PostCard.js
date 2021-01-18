@@ -14,7 +14,6 @@ import {
   UserInfoText,
   UserName,
 } from '../styles/FeedStyles';
-// require("../../assets/users/user-1.jpg")
 
 const PostCard = ({data}) => {
   return (

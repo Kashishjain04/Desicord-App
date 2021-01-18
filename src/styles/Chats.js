@@ -1,20 +1,22 @@
-import { Platform } from "react-native";
-import styled from "styled-components";
-import { windowHeight, windowWidth } from "../utils/Dimensions";
+import {Platform} from 'react-native';
+import styled from 'styled-components';
+import {windowHeight, windowWidth} from '../utils/Dimensions';
 
 export const MessageList = styled.FlatList`
-  ${Platform.OS === "android" && "margin-top: 20px"};
+  ${Platform.OS === 'android' && 'margin-top: 20px'};
   overflow: hidden;
-  height: ${Platform.OS === "android"
-    ? windowHeight - 145
-    : windowHeight - 150}px;
+  height: ${(props) =>
+    Platform.OS === 'android'
+      ? windowHeight - props.height - 150
+      : windowHeight - props.height - 170}px;
   display: flex;
   flex-direction: column;
+  margin: 10px 0;
 `;
 
 export const MessageContainer = styled.View`
   width: ${windowWidth / 1.25}px;
-  background: ${(props) => (props.myMessage ? "#acdecd" : "#ccc")};
+  background: ${(props) => (props.myMessage ? '#acdecd' : '#ccc')};
   padding: 20px 10px;
   margin: 5px 10px;
   border-radius: 10px;
@@ -22,7 +24,7 @@ export const MessageContainer = styled.View`
   flex-direction: row;
   align-items: center;
   font-size: 20px;
-  ${(props) => props.myMessage && "align-self: flex-end;"};
+  ${(props) => props.myMessage && 'align-self: flex-end;'};
 `;
 
 export const MessageInfo = styled.View`

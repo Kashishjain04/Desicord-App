@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
-import React, {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {ActivityIndicator, Keyboard, Platform, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import ChatInput from '../Components/ChatInput';
 import Message from '../Components/Message';
@@ -8,23 +8,57 @@ import {selectChannelId} from '../redux/features/AppSlice';
 import {ChatDate, MessageList} from '../styles/Chats';
 
 const ChatScreen = () => {
+  const _isMounted = useRef(true);
+
+  const flatlist = useRef(null);
+  const [isLoading, setLoading] = useState(true);
   const chId = useSelector(selectChannelId);
   const [messages, setMessages] = useState([]);
-  const [isMount, setMount] = useState(false);
+  const [height, setHeight] = useState(0);
+
   useEffect(() => {
-    setMount(true);
     firestore()
       .collection('channels')
       .doc(chId)
       .collection('messages')
       .orderBy('timestamp', 'asc')
-      .onSnapshot((snap) => setMessages(snap.docs.map((doc) => doc.data())));
+      .onSnapshot((snap) => {
+        setMessages(snap.docs.map((doc) => doc.data()));
+        _isMounted.current && setLoading(false);
+      });
+
+    // cleanup
+    return () => {
+      _isMounted.current = false;
+    };
   }, [chId]);
-  return isMount === true ? (
-    <View>
+
+  Keyboard.addListener('keyboardDidShow', (e) => {
+    _isMounted.current &&
+      setHeight(
+        Platform.OS === 'android'
+          ? e.endCoordinates.height + 10
+          : e.endCoordinates.height - 15,
+      );
+  });
+  Keyboard.addListener('keyboardDidHide', (e) => {
+    _isMounted.current && setHeight(0);
+  });
+
+  return isLoading ? (
+    <ActivityIndicator
+      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+      size={Platform.OS === 'android' ? 50 : 'large'}
+      color="#999"
+    />
+  ) : (
+    <View style={{display: 'flex', justifyContent: 'center'}}>
       <MessageList
+        height={height}
         showsVerticalScrollIndicator={false}
         data={messages}
+        ref={flatlist}
+        onContentSizeChange={() => flatlist.current.scrollToEnd()}
         keyExtractor={(item) => item.timestamp + item.user}
         renderItem={({item, index}) => {
           if (
@@ -41,7 +75,7 @@ const ChatScreen = () => {
                   <Text style={{color: 'white'}}>
                     {new Date(
                       messages[index].timestamp?.toDate(),
-                    ).toLocaleDateString()}
+                    ).toLocaleDateString('en-IN')}
                   </Text>
                 </ChatDate>
                 <Message message={item} />
@@ -53,8 +87,6 @@ const ChatScreen = () => {
       />
       <ChatInput style={{}} />
     </View>
-  ) : (
-    <Text>Loading...</Text>
   );
 };
 

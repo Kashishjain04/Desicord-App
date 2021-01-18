@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../redux/features/UserSlice';
 import {
@@ -14,15 +14,6 @@ const Message = ({message}) => {
   const myMessage = message.user.email === user.email;
   return (
     <MessageContainer myMessage={myMessage}>
-      {/* <Avatar src={message.user.photo} /> */}
-      {/* <Avatar
-        size={50}
-        rounded
-        source={{
-          uri:
-            "https://lh3.googleusercontent.com/a-/AOh14GhfgSuVig-RNSusuO5_kYuCKLZEBIbxvssam3e8ng=s96-c",
-        }}
-      /> */}
       <MessageInfo>
         <MessageHeader>
           <Text style={{fontWeight: 'bold', fontSize: 16}}>

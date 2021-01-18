@@ -17,7 +17,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* desichordTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* desichordTests.m */; };
 		7F9BF44F5860591283865234 /* libPods-desichord-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 030C8949E00BC9A4C706FA11 /* libPods-desichord-tvOSTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		A460E88E2580A49900733015 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A460E88D2580A49900733015 /* GoogleService-Info.plist */; };
+		A408B6402584D9DA00172719 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A408B63F2584D9D900172719 /* GoogleService-Info.plist */; };
 		C7F57E25B382E3F147184CB6 /* libPods-desichord-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EBABB56D714705820F40FBE /* libPods-desichord-tvOS.a */; };
 		E6690D64ACE1D4ACA3C7021F /* libPods-desichord-desichordTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E93046861F79E4A838C3A1 /* libPods-desichord-desichordTests.a */; };
 		FE71E2D6608149DDF6E43B4B /* libPods-desichord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A2A34744136F209D8E4E67 /* libPods-desichord.a */; };
@@ -73,7 +73,8 @@
 		8E59CB4FF07B5CA586A3D788 /* Pods-desichord-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-desichord-tvOS.release.xcconfig"; path = "Target Support Files/Pods-desichord-tvOS/Pods-desichord-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		97010674D0964532BB9E0C95 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		99927EAAC025DD6C9B07332F /* Pods-desichord-desichordTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-desichord-desichordTests.debug.xcconfig"; path = "Target Support Files/Pods-desichord-desichordTests/Pods-desichord-desichordTests.debug.xcconfig"; sourceTree = "<group>"; };
-		A460E88D2580A49900733015 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A408B63F2584D9D900172719 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A4847BDE25813C0700F5C8DA /* desichord.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = desichord.entitlements; path = desichord/desichord.entitlements; sourceTree = "<group>"; };
 		A5CD94355836470386CCFBB9 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		AACBF31EAE9744429186841D /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		C4FF7FADDEF82019DB0D999D /* Pods-desichord.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-desichord.debug.xcconfig"; path = "Target Support Files/Pods-desichord/Pods-desichord.debug.xcconfig"; sourceTree = "<group>"; };
@@ -143,6 +144,7 @@
 		13B07FAE1A68108700A75B9A /* desichord */ = {
 			isa = PBXGroup;
 			children = (
+				A4847BDE25813C0700F5C8DA /* desichord.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -215,7 +217,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				A460E88D2580A49900733015 /* GoogleService-Info.plist */,
+				A408B63F2584D9D900172719 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* desichord */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* desichordTests */,
@@ -385,7 +387,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				A460E88E2580A49900733015 /* GoogleService-Info.plist in Resources */,
+				A408B6402584D9DA00172719 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +783,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = desichord/desichord.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = desichord/Info.plist;
@@ -805,6 +808,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = desichord/desichord.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = desichord/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
