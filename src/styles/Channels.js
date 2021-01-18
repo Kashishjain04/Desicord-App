@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const JoinChannel = styled.TouchableOpacity`
   margin: 10px;
@@ -10,7 +10,7 @@ export const JoinChannel = styled.TouchableOpacity`
 `;
 
 export const ChannelsContainer = styled.View`
-  ${Platform.OS === "android" && "margin-top: 20px"};
+  ${Platform.OS === 'android' && 'margin-top: 20px'};
   display: flex;
   justify-content: center;
   flex: 1;
@@ -19,7 +19,7 @@ export const ChannelsContainer = styled.View`
 
 export const ChannelContainer = styled.TouchableOpacity`
   margin: 10px 0;
-  height: 50px;
+  height: 70px;
   padding: 0 10px;
 `;
 

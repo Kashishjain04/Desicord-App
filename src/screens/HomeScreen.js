@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SocialButton from '../Components/SocialButton';
 import {useDispatch} from 'react-redux';
@@ -10,10 +10,13 @@ import {GoogleSignin} from '@react-native-community/google-signin';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
+  const _isMounted = useRef(true);
+  const [isLoading, setLoading] = useState(true);
 
   const googleLogin = () => {
     GoogleSignin.signIn()
       .then(({idToken}) => {
+        setLoading(true);
         const googleCredential = auth.GoogleAuthProvider.credential(idToken);
         auth().signInWithCredential(googleCredential);
       })
@@ -33,14 +36,24 @@ const LoginScreen = () => {
           uid: user.uid,
           photoURL: user.photoURL,
         };
-        dispatch(login(obj));
+        _isMounted.current && dispatch(login(obj));
       } else {
-        dispatch(logout());
+        _isMounted.current && dispatch(logout());
       }
+      _isMounted.current && setLoading(false);
     });
+    return () => {
+      _isMounted.current = false;
+    };
   }, []);
 
-  return (
+  return isLoading === true ? (
+    <ActivityIndicator
+      style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+      size={Platform.OS === 'android' ? 50 : 'large'}
+      color="#999"
+    />
+  ) : (
     <View style={styles.container}>
       <AntDesign
         style={styles.iconStyle}

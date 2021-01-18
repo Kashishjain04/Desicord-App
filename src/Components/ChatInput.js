@@ -1,18 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {selectChannelId, selectChannelName} from '../redux/features/AppSlice';
 import {MessageInput, MessageInputContainer} from '../styles/Chats';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import firestore from '@react-native-firebase/firestore';
 import {selectUser} from '../redux/features/UserSlice';
-import {Keyboard, Platform} from 'react-native';
-import { windowWidth } from '../utils/Dimensions';
 
 const ChatInput = () => {
+  const _isMounted = useRef(true);
   const [message, setMessage] = useState('');
   const chName = useSelector(selectChannelName);
   const chId = useSelector(selectChannelId);
-  const user = useSelector(selectUser);  
+  const user = useSelector(selectUser);
+
+  useEffect(() => {
+    // works as componentWillUnmount
+    return () => {
+      _isMounted.current = false;
+    };
+  });
+
   const sendHandler = () => {
     if (message.length === 0) {
       return alert('Invalid message');
@@ -23,12 +30,14 @@ const ChatInput = () => {
       user,
     });
     setMessage('');
-  };  
+  };
+
   return (
-    <MessageInputContainer
-      style={{backgroundColor: 'white', marginBottom: 10 }}>
+    <MessageInputContainer style={{backgroundColor: 'white', marginBottom: 10}}>
       <MessageInput
-        onChangeText={(value) => setMessage(value)}
+        onChangeText={(value) => {
+          setMessage(value);
+        }}
         value={message}
         autoCorrect={false}
         autoCapitalize="none"
