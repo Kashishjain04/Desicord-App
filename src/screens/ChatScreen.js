@@ -33,6 +33,13 @@ const ChatScreen = () => {
     };
   }, [chId]);
 
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp).getDate();
+    const month = new Date(timestamp).getMonth();
+    const year = new Date(timestamp).getFullYear();
+    return `${date}/${month + 1}/${year}`;
+  };
+
   Keyboard.addListener('keyboardDidShow', (e) => {
     _isMounted.current &&
       setHeight(
@@ -73,9 +80,7 @@ const ChatScreen = () => {
               <>
                 <ChatDate>
                   <Text style={{color: 'white'}}>
-                    {new Date(
-                      messages[index].timestamp?.toDate(),
-                    ).toLocaleDateString('en-IN')}
+                    {formatDate(messages[index].timestamp?.toDate())}
                   </Text>
                 </ChatDate>
                 <Message message={item} />

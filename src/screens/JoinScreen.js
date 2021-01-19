@@ -38,7 +38,8 @@ const JoinScreen = ({navigation}) => {
               firestore()
                 .collection('channels')
                 .doc(channelId)
-                .update({fcmTokens: firestore.FieldValue.arrayUnion(res)});
+                .update({fcmTokens: firestore.FieldValue.arrayUnion(res)})
+                .catch(() => {});
             })
             .catch(() => {
               _isMounted.current && setLoading(false);

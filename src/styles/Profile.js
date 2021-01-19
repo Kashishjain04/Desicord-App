@@ -1,10 +1,9 @@
-import styled from "styled-components";
-import { windowWidth } from "../utils/Dimensions";
+import styled from 'styled-components';
 
 export const ProfilePhoto = styled.Image`
-  width: ${windowWidth}px;
-  height: 200px;
-  margin-bottom: 15px;
+  width: 150px;
+  height: 150px;
+  margin-left: 15px;
 `;
 
 export const ProfileName = styled.Text`

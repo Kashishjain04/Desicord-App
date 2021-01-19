@@ -14,6 +14,7 @@ const LoginScreen = () => {
   const [isLoading, setLoading] = useState(true);
 
   const googleLogin = () => {
+    GoogleSignin.clearCachedAccessToken;
     GoogleSignin.signIn()
       .then(({idToken}) => {
         setLoading(true);
