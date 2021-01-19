@@ -1,5 +1,7 @@
 import React, {useEffect, useRef} from 'react';
-import {View} from 'react-native';
+import {Text, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {log} from 'react-native-reanimated';
 import {useSelector} from 'react-redux';
 import {selectUser} from '../redux/features/UserSlice';
 import {ProfileName, ProfilePhoto} from '../styles/Profile';
@@ -16,8 +18,20 @@ const ProfileScreen = () => {
   });
 
   return (
-    <View>
-      <ProfilePhoto source={{uri: user.photoURL}} />
+    <View
+      style={{
+        flex: 0.5,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <ProfilePhoto
+        source={{
+          uri:
+            'https://lh3.googleusercontent.com/a-/AOh14GhfgSuVig-RNSusuO5_kYuCKLZEBIbxvssam3e8ng=s96-c',
+        }}
+      />
       <ProfileName>{user.displayName}</ProfileName>
     </View>
   );

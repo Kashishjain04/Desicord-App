@@ -23,9 +23,9 @@ const Stack = createStackNavigator();
 const HomeStack = ({navigation}) => {
   const dispatch = useDispatch();
   const logoutHandler = () => {
+    DevSettings.reload();
     dispatch(logout());
     auth().signOut();
-    DevSettings.reload();
   };
   return (
     <Stack.Navigator
