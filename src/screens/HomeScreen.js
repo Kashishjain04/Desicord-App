@@ -7,6 +7,7 @@ import {useDispatch} from 'react-redux';
 import {login, logout} from '../redux/features/UserSlice';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
+import {GoogleConfig} from '../utils/GoogleConfig';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -25,10 +26,7 @@ const LoginScreen = () => {
   };
 
   useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        '238008901705-aav5vjhnu1e9i3s6hsegboh9fssrq4aq.apps.googleusercontent.com',
-    });
+    GoogleConfig;
     auth().onAuthStateChanged((user) => {
       if (user) {
         const obj = {
